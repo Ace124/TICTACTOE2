@@ -26,13 +26,13 @@ catchIO :: IO a -> (Exception.IOException -> IO a) -> IO a
 catchIO = Exception.catch
 
 version :: Version
-version = Version [0,1,0,0] []
+version = Version [0,1] []
 bindir, libdir, datadir, libexecdir, sysconfdir :: FilePath
 
 bindir     = "C:\\Users\\Ace\\AppData\\Roaming\\cabal\\bin"
-libdir     = "C:\\Users\\Ace\\AppData\\Roaming\\cabal\\x86_64-windows-ghc-8.0.1\\TICTACTOE2-0.1.0.0-GVNdzcpF4nU5bqdw1M4Wbq"
-datadir    = "C:\\Users\\Ace\\AppData\\Roaming\\cabal\\x86_64-windows-ghc-8.0.1\\TICTACTOE2-0.1.0.0"
-libexecdir = "C:\\Users\\Ace\\AppData\\Roaming\\cabal\\TICTACTOE2-0.1.0.0-GVNdzcpF4nU5bqdw1M4Wbq"
+libdir     = "C:\\Users\\Ace\\AppData\\Roaming\\cabal\\x86_64-windows-ghc-8.0.1\\TICTACTOE2-0.1-54U4chSIy2n1hU1XbqDJ2T"
+datadir    = "C:\\Users\\Ace\\AppData\\Roaming\\cabal\\x86_64-windows-ghc-8.0.1\\TICTACTOE2-0.1"
+libexecdir = "C:\\Users\\Ace\\AppData\\Roaming\\cabal\\TICTACTOE2-0.1-54U4chSIy2n1hU1XbqDJ2T"
 sysconfdir = "C:\\Users\\Ace\\AppData\\Roaming\\cabal\\etc"
 
 getBinDir, getLibDir, getDataDir, getLibexecDir, getSysconfDir :: IO FilePath
