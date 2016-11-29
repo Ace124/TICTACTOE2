@@ -12,19 +12,14 @@ import Data.ByteString.Lazy.Char8 as C
 import Data.Maybe
 
 --url :: String
-url = "http://tictactoe.homedir.eu/game/n3/player/2"
-
---encoding :: string
-encoding = "application/json+list"
+url = "http://tictactoe.homedir.eu/game/n9/player/2"
 
 post :: String -> IO()
 post msg= do
   manager <- newManager defaultManagerSettings
-  initialRequest <- parseUrl url
+  initialRequest <- parseUrlThrow url
   let request = initialRequest { method = B.pack "POST",
-   requestHeaders = 
-   [(hContentType,B.pack encoding),
-   (hAccept,B.pack encoding)],
+   requestHeaders = [(hContentType,B.pack "application/json+list"),(hAccept,B.pack "application/json+list")],
    requestBody = RequestBodyLBS $ C.pack ((Prelude.take ((Prelude.length msg) - 1) msg)++", "++(fromJust (turn msg)))
    }
   response <- httpLbs request manager
@@ -36,7 +31,7 @@ post msg= do
 get :: IO()
 get = do
   manager <- newManager defaultManagerSettings
-  initialRequest <- parseUrl url
+  initialRequest <- parseUrlThrow url
   let request = initialRequest { method = "GET",
    requestHeaders = [(hContentType, "application/json+list"),(hAccept, "application/json+list")]
    }
@@ -45,4 +40,4 @@ get = do
   post $ unpack $ responseBody response
 main :: IO()
 main = do
-	get
+    get

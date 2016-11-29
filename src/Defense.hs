@@ -12,16 +12,16 @@
 
  encodeMove :: Maybe (Int, Int, Char) -> Maybe String
  encodeMove Nothing = Nothing
- encodeMove (Just (x,y,z)) = Just ("[\"x\", " ++ [(intToDigit x)] ++ ", \"y\", "++ [(intToDigit y)] ++  ", \"v\", \"" ++ [z] ++"\"]]")		
-
+ encodeMove (Just (x,y,z)) = Just ("[\"x\", " ++ [(intToDigit x)] ++ ", \"y\", "++ [(intToDigit y)] ++  ", \"v\", \"" ++ [z] ++"\"]]")
+ 
  turn :: String -> Maybe String
  turn msg = encodeMove $ move msg 
 
  findMove :: [(Char,Char,Char)] -> Maybe(Int, Int, Char)
  findMove moves  
-	| (filter(\(a,b,c)-> a=='1' && b=='1') moves)==[] = Just (digitToInt '1',digitToInt '1','x')
-    | (((length(moves))==2) && ((filter(\(a,b,c)-> a=='0' && b=='0') moves)==[])) = Just (digitToInt '0',digitToInt '0','x')
-    | (((length(moves))==2) && ((filter(\(a,b,c)-> a=='2' && b=='0') moves)==[])) = Just (digitToInt '2',digitToInt '0','x')
+--  | (filter(\(a,b,c)-> a=='1' && b=='1') moves)==[] = Just (digitToInt '1',digitToInt '1','x')
+    | (((length(moves))==1) && ((filter(\(a,b,c)-> a=='0' && b=='0') moves)==[])) = Just (digitToInt '0',digitToInt '0','o')
+    | (((length(moves))==1) && ((filter(\(a,b,c)-> a=='2' && b=='0') moves)==[])) = Just (digitToInt '2',digitToInt '0','o')
     -- Kai x = 0
     | (((length(filter(\(a,b,c)-> a=='0' && c=='x') moves))==2) && ((filter(\(a,b,c)-> a=='0' && c=='o') moves)==[]) && ((filter(\(a,b,c)-> a=='0' && b=='0') moves)==[])) = Just (digitToInt '0',digitToInt '0','o')
     | (((length(filter(\(a,b,c)-> a=='0' && c=='x') moves))==2) && ((filter(\(a,b,c)-> a=='0' && c=='o') moves)==[]) && ((filter(\(a,b,c)-> a=='0' && b=='1') moves)==[])) = Just (digitToInt '0',digitToInt '1','o')
@@ -38,20 +38,31 @@
     | (((length(filter(\(a,b,c)-> b=='2' && c=='x') moves))==2) && ((filter(\(a,b,c)-> b=='2' && c=='o') moves)==[]) && ((filter(\(a,b,c)-> a=='0' && b=='2') moves)==[])) = Just (digitToInt '0',digitToInt '2','o')
     | (((length(filter(\(a,b,c)-> b=='2' && c=='x') moves))==2) && ((filter(\(a,b,c)-> b=='2' && c=='o') moves)==[]) && ((filter(\(a,b,c)-> a=='1' && b=='2') moves)==[])) = Just (digitToInt '1',digitToInt '2','o')
     | (((length(filter(\(a,b,c)-> b=='2' && c=='x') moves))==2) && ((filter(\(a,b,c)-> b=='2' && c=='o') moves)==[]) && ((filter(\(a,b,c)-> a=='2' && b=='2') moves)==[])) = Just (digitToInt '2',digitToInt '2','o')
-	| (filter(\(a,b,c)-> a=='0' && b=='0') moves)==[] = Just (digitToInt '0',digitToInt '0','o')
-    | (filter(\(a,b,c)-> a=='2' && b=='0') moves)==[] = Just (digitToInt '2',digitToInt '1','o')
-    | (filter(\(a,b,c)-> a=='0' && b=='2') moves)==[] = Just (digitToInt '2',digitToInt '0','o')
+    -- Įstrižainės
+    | ((length(filter(\(a,b,c)-> a=='0' && b=='0' && c=='x') moves)==1) && (length(filter(\(a,b,c)-> a=='1' && b=='1' && c=='x') moves)==1) && (filter(\(a,b,c)-> a=='2' && b=='2') moves)==[]) = Just (digitToInt '2',digitToInt '2','o')
+    | ((length(filter(\(a,b,c)-> a=='0' && b=='0' && c=='x') moves)==1) && (length(filter(\(a,b,c)-> a=='2' && b=='2' && c=='x') moves)==1) && (filter(\(a,b,c)-> a=='1' && b=='1') moves)==[]) = Just (digitToInt '1',digitToInt '2','o')
+    | ((length(filter(\(a,b,c)-> a=='1' && b=='1' && c=='x') moves)==1) && (length(filter(\(a,b,c)-> a=='2' && b=='2' && c=='x') moves)==1) && (filter(\(a,b,c)-> a=='0' && b=='0') moves)==[]) = Just (digitToInt '0',digitToInt '0','o')
+    | ((length(filter(\(a,b,c)-> a=='0' && b=='2' && c=='x') moves)==1) && (length(filter(\(a,b,c)-> a=='1' && b=='1' && c=='x') moves)==1) && (filter(\(a,b,c)-> a=='2' && b=='0') moves)==[]) = Just (digitToInt '2',digitToInt '0','o')
+    | ((length(filter(\(a,b,c)-> a=='2' && b=='0' && c=='x') moves)==1) && (length(filter(\(a,b,c)-> a=='1' && b=='1' && c=='x') moves)==1) && (filter(\(a,b,c)-> a=='0' && b=='2') moves)==[]) = Just (digitToInt '0',digitToInt '2','o')
+    | ((length(filter(\(a,b,c)-> a=='0' && b=='2' && c=='x') moves)==1) && (length(filter(\(a,b,c)-> a=='2' && b=='0' && c=='x') moves)==1) && (filter(\(a,b,c)-> a=='1' && b=='1') moves)==[]) = Just (digitToInt '1',digitToInt '1','o')
+    -- Aukštyn žemyn
+    | ((length(filter(\(a,b,c)-> a=='0' && b=='1' && c=='x') moves)==1) && (length(filter(\(a,b,c)-> a=='1' && b=='1' && c=='x') moves)==1) && (filter(\(a,b,c)-> a=='2' && b=='1') moves)==[]) = Just (digitToInt '2',digitToInt '1','o')
+    | ((length(filter(\(a,b,c)-> a=='2' && b=='1' && c=='x') moves)==1) && (length(filter(\(a,b,c)-> a=='1' && b=='1' && c=='x') moves)==1) && (filter(\(a,b,c)-> a=='0' && b=='1') moves)==[]) = Just (digitToInt '0',digitToInt '1','o')
+    | ((length(filter(\(a,b,c)-> a=='0' && b=='1' && c=='x') moves)==1) && (length(filter(\(a,b,c)-> a=='2' && b=='1' && c=='x') moves)==1) && (filter(\(a,b,c)-> a=='1' && b=='1') moves)==[]) = Just (digitToInt '1',digitToInt '1','o')
+    | ((length(filter(\(a,b,c)-> a=='1' && b=='0' && c=='x') moves)==1) && (length(filter(\(a,b,c)-> a=='1' && b=='1' && c=='x') moves)==1) && (filter(\(a,b,c)-> a=='1' && b=='2') moves)==[]) = Just (digitToInt '1',digitToInt '2','o')
+    | ((length(filter(\(a,b,c)-> a=='1' && b=='1' && c=='x') moves)==1) && (length(filter(\(a,b,c)-> a=='1' && b=='2' && c=='x') moves)==1) && (filter(\(a,b,c)-> a=='1' && b=='0') moves)==[]) = Just (digitToInt '1',digitToInt '0','o')
+    | ((length(filter(\(a,b,c)-> a=='1' && b=='0' && c=='x') moves)==1) && (length(filter(\(a,b,c)-> a=='1' && b=='2' && c=='x') moves)==1) && (filter(\(a,b,c)-> a=='1' && b=='1') moves)==[]) = Just (digitToInt '1',digitToInt '1','o')
+    --Kai nebėra pavojaus pralaimėti
+    | (filter(\(a,b,c)-> a=='0' && b=='0') moves)==[] = Just (digitToInt '0',digitToInt '0','o')
+    | (filter(\(a,b,c)-> a=='2' && b=='0') moves)==[] = Just (digitToInt '2',digitToInt '0','o')
+    | (filter(\(a,b,c)-> a=='0' && b=='2') moves)==[] = Just (digitToInt '0',digitToInt '2','o')
     | (filter(\(a,b,c)-> a=='2' && b=='2') moves)==[] = Just (digitToInt '2',digitToInt '2','o')
-    | (filter(\(a,b,c)-> a=='0' && b=='1') moves)==[] = Just (digitToInt '0',digitToInt '2','o')
+    | (filter(\(a,b,c)-> a=='0' && b=='1') moves)==[] = Just (digitToInt '0',digitToInt '1','o')
     | (filter(\(a,b,c)-> a=='1' && b=='0') moves)==[] = Just (digitToInt '1',digitToInt '0','o')
     | (filter(\(a,b,c)-> a=='1' && b=='2') moves)==[] = Just (digitToInt '1',digitToInt '2','o')
-    | (filter(\(a,b,c)-> a=='2' && b=='1') moves)==[] = Just (digitToInt '0',digitToInt '1','o')
+    | (filter(\(a,b,c)-> a=='2' && b=='1') moves)==[] = Just (digitToInt '2',digitToInt '1','o')
     | otherwise = Nothing
 
- whoseTurn :: [(Char,Char,Char)] -> Char
- whoseTurn moves
-	|(mod (length moves) 2) == 0 = 'x'
-	|(mod (length moves) 2) == 1 = 'o'
  --to filter items with odd index
  odds :: [t] -> [t]
  odds [] = []
