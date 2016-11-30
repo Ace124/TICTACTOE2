@@ -1,9 +1,17 @@
 Test suite TicTacToe-test: RUNNING...
 
-Validates
+Validation of game that is already won
   Should return True because o won
+Validation of game that is not ower(no winners)
+  Should return False because nobody won
+Check to see if parsing correctly
+  Should return [('0','1','x'),('0','2','o'),('1','2','x'),('1','0','o'),('2','2','x'),('0','0','o'),('2','1','x')]
+Check if encoding move to Json correctly
+  Should return Just ["x", 2, "y", 0, "v", "o"]]
+Wins the game if it is possible
+  Should return Just(2,0,'o')
 
-Finished in 0.0006 seconds
-1 example, 0 failures
+Finished in 0.1187 seconds
+5 examples, 0 failures
 Test suite TicTacToe-test: PASS
 Test suite logged to: dist\test\TICTACTOE2-0.1-TicTacToe-test.log
