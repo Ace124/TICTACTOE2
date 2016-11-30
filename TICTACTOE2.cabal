@@ -15,6 +15,8 @@ cabal-version:       >=1.10
 library
   hs-source-dirs:      src
   exposed-modules:     Defense
+                     , Parser
+                     , Validate
   build-depends:       base >= 4.7 && < 5
                      , http-client
                      , http-types
@@ -23,7 +25,7 @@ library
   default-language:    Haskell2010                   
   
 executable TICTACTOE2
-  hs-source-dirs:      src
+  hs-source-dirs:      app
   main-is:             Main.hs
   default-language:    Haskell2010
   build-depends:       base
@@ -34,3 +36,12 @@ executable TICTACTOE2
                      , bytestring
   default-language:    Haskell2010
   
+test-suite TicTacToe-test
+  type:                exitcode-stdio-1.0
+  hs-source-dirs:      test
+  main-is:             Spec.hs
+  build-depends:       base
+                     , TICTACTOE2
+                     , hspec
+  ghc-options:         -threaded -rtsopts -with-rtsopts=-N
+  default-language:    Haskell2010

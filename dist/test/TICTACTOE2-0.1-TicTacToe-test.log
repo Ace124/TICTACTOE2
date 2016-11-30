@@ -1,0 +1,9 @@
+Test suite TicTacToe-test: RUNNING...
+
+Validates
+  Should return True because o won
+
+Finished in 0.0006 seconds
+1 example, 0 failures
+Test suite TicTacToe-test: PASS
+Test suite logged to: dist\test\TICTACTOE2-0.1-TicTacToe-test.log
